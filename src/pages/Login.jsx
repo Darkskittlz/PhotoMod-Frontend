@@ -66,7 +66,13 @@ const Login = (props) => {
         setLoading(true);
 
         try {
-            const response = await axios.post('http://localhost:3001/authenticate', {
+            //Local 
+            // const response = await axios.post('http://localhost:3001/authenticate', {
+            //     username: value,
+            // });
+
+            //Netlify DEV
+            const response = await axios.post('/.netlify/functions/Chat', {
                 username: value,
             });
 
@@ -83,21 +89,28 @@ const Login = (props) => {
             setLoading(false);
         }
 
+        //Local
         // axios.post(
         //     'http://localhost:3001/authenticate',
         //     { username: value }
         // )
-        //     .then((r) => {
-        //         props.onAuth({ ...r.data, secret: value });
-        //         forwardHome();
-        //     })
-        //     .catch((e) => {
-        //         console.error('error: ', e);
-        //         if (error.response) {
-        //             console.error('Response Data:', error.response.data);
-        //             console.error('Response Status:', error.response.status);
-        //         }
-        //     })
+
+        //Netlify DEV
+        axios.post(
+            'http://localhost:8888/authenticate',
+            { username: value }
+        )
+            .then((r) => {
+                props.onAuth({ ...r.data, secret: value });
+                forwardHome();
+            })
+            .catch((e) => {
+                console.error('error: ', e);
+                if (error.response) {
+                    console.error('Response Data:', error.response.data);
+                    console.error('Response Status:', error.response.status);
+                }
+            })
     };
 
     return (
@@ -123,11 +136,11 @@ const Login = (props) => {
                                 </div>
                             </form>
                             {/* <div className="GoogleAuth">
-                        <GoogleLogin
-                            onSuccess={responseMessage}
-                            onError={errorMessage}
-                        />
-                    </div> */}
+                                <GoogleLogin
+                                    onSuccess={responseMessage}
+                                    onError={errorMessage}
+                                />
+                            </div> */}
                         </div>
                     </GridContainer>
                 </GoogleOAuthProvider>
