@@ -3,7 +3,11 @@
   functions = "netlify/functions"
   publish = "dist"
 
- [functions]
+[dev]
+  framework = "#auto"        
+  publish = "dev-dist"          
+
+[functions]
     directory = "/netlify/functions/" 
 
 [[redirects]]
