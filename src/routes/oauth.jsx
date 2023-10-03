@@ -1,16 +1,16 @@
-var express = require('express');
+import express from 'express';
+import dotenv from 'dotenv';
 var router = express.Router();
-const dotenv = require('dotenv');
 dotenv.config();
-const {OAuth2Client} = require('google-auth-library');
+const { OAuth2Client } = require('google-auth-library');
 
-async function getUserData(access_token){
+async function getUserData(access_token) {
   const response = await fetch('https://www.googleapis.com/oauth2/v3/userinfo?access_token${access_token}');
   const data = await response.json();
   console.log('data: ', data);
 }
 
-router.get('/', async function(req,res,next) {
+router.get('/', async function (req, res, next) {
   const code = req.query.code;
   console.log("code: ", code);
 
@@ -28,7 +28,7 @@ router.get('/', async function(req,res,next) {
     const user = oAuth2Client.credentials;
     console.log("Credentials: ", user);
     await getUserData(user.access_token);
-  } catch(err){
+  } catch (err) {
     console.log('Error signing in with Google')
   }
 });

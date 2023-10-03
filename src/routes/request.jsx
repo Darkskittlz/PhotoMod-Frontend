@@ -1,11 +1,11 @@
-var express = require('express');
+import express from 'express';
+import dotenv from 'dotenv';
 var router = express.Router();
-const dotenv = require('dotenv');
 dotenv.config();
-const {OAuth2Client} = require('google-auth-library');
+const { OAuth2Client } = require('google-auth-library');
 
 // Get users listing. 
-router.post('/', async function(req, res, next) {
+router.post('/', async function (req, res, next) {
   res.header('Access-Control-Allow-Origin', 'http://localhost:5173');
   res.header('Referrer-Policy', 'no-referrer-when-downgrade');
 
@@ -18,13 +18,13 @@ router.post('/', async function(req, res, next) {
   );
 
   const authorizeUrl = oAuth2Client.generateAuthUrl({
-    access_type:'offline',
-    scope:'https://www.googleapis.com/auth/userinfo.profile openid',
+    access_type: 'offline',
+    scope: 'https://www.googleapis.com/auth/userinfo.profile openid',
     prompt: 'consent'
   });
 
-  res.json({url:authorizeUrl})
-  
+  res.json({ url: authorizeUrl })
+
 });
 
 module.exports = router 
